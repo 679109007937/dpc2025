@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+void findZeroSumSubarrays(int arr[], int n) {
+    for (int start = 0; start < n; start++) {
+        int sum = 0;
+        for (int end = start; end < n; end++) {
+            sum += arr[end];
+            if (sum == 0) {
+                printf("(%d, %d)\n", start, end);
+            }
+        }
+    }
+}
+
+int main() {
+    int arr[] = {1, 2, -3, 3, -1, 2};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Subarrays with zero sum are:\n");
+    findZeroSumSubarrays(arr, n);
+
+    return 0;
+}
