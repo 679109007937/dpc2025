@@ -1,0 +1,22 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char s[100];
+    int k, n, i, j, x, count, freq[26], ans = 0;
+    scanf("%s %d", s, &k);
+    n = strlen(s);
+    for (i = 0; i < n; i++) {
+        for (j = i; j < n; j++) {
+            for (x = 0; x < 26; x++) freq[x] = 0;
+            count = 0;
+            for (x = i; x <= j; x++) {
+                if (freq[s[x] - 'a'] == 0) count++;
+                freq[s[x] - 'a']++;
+            }
+            if (count == k) ans++;
+        }
+    }
+    printf("%d\n", ans);
+    return 0;
+}
