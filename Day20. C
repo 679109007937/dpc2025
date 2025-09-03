@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 100
+
+int stack[MAX];
+int top=-1;
+
+void push(int x){ stack[++top]=x; }
+int pop(){ return stack[top--]; }
+int peek(){ return stack[top]; }
+int isEmpty(){ return top==-1; }
+
+void sortedInsert(int x){
+    if(isEmpty()||x>peek()){
+        push(x);
+        return;
+    }
+    int temp=pop();
+    sortedInsert(x);
+    push(temp);
+}
+
+void sortStack(){
+    if(!isEmpty()){
+        int x=pop();
+        sortStack();
+        sortedInsert(x);
+    }
+}
+
+int main(){
+    push(3);
+    push(1);
+    push(4);
+    push(2);
+    sortStack();
+    while(!isEmpty())
+        printf("%d ",pop());
+    return 0;
+}
