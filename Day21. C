@@ -1,0 +1,58 @@
+#include <stdio.h>
+
+#define MAX 100
+
+int stack[MAX];
+int top = -1;
+
+void push(int x) {
+    if(top < MAX - 1) {
+        stack[++top] = x;
+    }
+}
+
+int pop() {
+    if(top >= 0) {
+        return stack[top--];
+    }
+    return -1;
+}
+
+int isEmpty() {
+    return top == -1;
+}
+
+// insert element at bottom using recursion
+void insertAtBottom(int x) {
+    if(isEmpty()) {
+        push(x);
+        return;
+    }
+    int temp = pop();
+    insertAtBottom(x);
+    push(temp);
+}
+
+// reverse stack using recursion
+void reverseStack() {
+    if(isEmpty()) return;
+    int temp = pop();
+    reverseStack();
+    insertAtBottom(temp);
+}
+
+int main() {
+    // Example input stack
+    push(3);
+    push(1);
+    push(4);
+    push(2);
+
+    reverseStack();
+
+    printf("Reversed stack: ");
+    while(!isEmpty()) {
+        printf("%d ", pop());
+    }
+    return 0;
+}
