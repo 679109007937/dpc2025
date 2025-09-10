@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 100
+
+typedef struct Node {
+    int v;
+    struct Node* next;
+} Node;
+
+Node* adj[MAX];
+int visited[MAX], dist[MAX], queue[MAX], front, rear;
+
+void addEdge(int u, int v) {
+    Node* n1 = (Node*)malloc(sizeof(Node));
+    n1->v = v; n1->next = adj[u]; adj[u] = n1;
+    Node* n2 = (Node*)malloc(sizeof(Node));
+    n2->v = u; n2->next = adj[v]; adj[v] = n2;
+}
+
+void bfs(int start) {
+    front = rear = 0;
+    queue[rear++] = start;
+    visited[start] = 1;
+    dist[start] = 0;
+    while (front < rear) {
+        int u = queue[front++];
+        Node* temp = adj[u];
+        while (temp) {
+            int v = temp->v;
+            if (!visited[v]) {
+                visited[v] = 1;
+                dist[v] = dist[u] + 1;
+                queue[rear++] = v;
+            }
+            temp = temp->next;
+        }
+    }
+}
+
+int main() {
+    int V = 5;
+    int edges[5][2] = {{0,1},{0,2},{1,3},{2,3},{3,4}};
+    for (int i = 0; i < 5; i++) addEdge(edges[i][0], edges[i][1]);
+    bfs(0);
+    printf("%d\n", dist[4]);
+    return 0;
+}
